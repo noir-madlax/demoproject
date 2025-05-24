@@ -23,7 +23,7 @@ export const AI_MODELS = {
 // 聊天完成函数
 export async function createChatCompletion(
   messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }>,
-  model: string = LLAMA_3_8B,
+  model: string,
   options?: {
     temperature?: number
     max_tokens?: number
@@ -46,17 +46,4 @@ export async function createChatCompletion(
   }
 }
 
-// 简单的文本生成函数
-export async function generateText(
-  prompt: string,
-  model: string = AI_MODELS.GPT_3_5_TURBO,
-  systemPrompt?: string
-) {
-  const messages = [
-    ...(systemPrompt ? [{ role: 'system' as const, content: systemPrompt }] : []),
-    { role: 'user' as const, content: prompt }
-  ]
-
-  const response = await createChatCompletion(messages, model)
-  return response.choices[0]?.message?.content || ''
-} 
+// generateText 函数及其注释将被删除 

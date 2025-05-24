@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
   try {
     const { 
       message, 
-      model = 'anthropic/claude-3-sonnet-20240229',
+      model = AI_MODELS.CLAUDE_SONNET,
       promptType = 'default',
       templateType = 'question'
     } = await request.json()
