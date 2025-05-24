@@ -1,0 +1,23 @@
+{
+  "systemPrompts": {
+    "default": "You are a helpful AI assistant. Please provide accurate, helpful, and well-structured responses to user questions.",
+    "creative": "You are a creative AI assistant. Help users with creative writing, brainstorming, and innovative ideas. Be imaginative and inspiring.",
+    "technical": "You are a technical AI assistant specializing in programming and technology. Provide detailed, accurate technical information and code examples.",
+    "casual": "You are a friendly and casual AI assistant. Respond in a conversational, approachable manner while being helpful and informative."
+  },
+  "userPromptTemplates": {
+    "question": "Please answer this question: {input}",
+    "explain": "Please explain the following concept in detail: {input}",
+    "summarize": "Please summarize the following content: {input}",
+    "translate": "Please translate the following text: {input}",
+    "code": "Please help me with this programming request: {input}",
+    "creative": "Please help me with this creative task: {input}"
+  },
+  "responseFormats": {
+    "default": "Please provide a clear and comprehensive response.",
+    "bullet_points": "Please format your response using bullet points.",
+    "step_by_step": "Please provide a step-by-step guide.",
+    "code_example": "Please include code examples in your response.",
+    "detailed": "Please provide a detailed and thorough explanation."
+  }
+} 
