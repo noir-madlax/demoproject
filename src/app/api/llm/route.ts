@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
   try {
     const { 
       message, 
-      model = AI_MODELS.GPT_3_5_TURBO,
+      model = 'anthropic/claude-3-sonnet-20240229',
       promptType = 'default',
       templateType = 'question'
     } = await request.json()
@@ -63,7 +63,27 @@ export async function POST(request: NextRequest) {
     // 调用OpenRouter API
     const response = await createChatCompletion(messages, model)
     
-    const aiResponse = response.choices[0]?.message?.content || 'No response generated'
+    let aiResponse = 'No response generated';
+    let usage = undefined;
+
+    // 类型守卫：检查 response 是否为 ChatCompletion 类型 (非流式)
+    // @ts-ignore
+    if (response && response.choices && Array.isArray(response.choices) && response.choices.length > 0) {
+      // @ts-ignore
+      aiResponse = response.choices[0]?.message?.content || 'No response generated';
+      // @ts-ignore
+      if (response.usage) {
+        // @ts-ignore
+        usage = response.usage;
+      }
+    } else {
+      // 如果不是预期的 ChatCompletion 结构，或者是个流 (需要进一步处理流的情况)
+      // 对于流式响应，需要不同的处理方式来逐步收集内容
+      // 当前代码似乎期望非流式响应，所以这里可以记录一个警告或错误
+      console.warn('Received a stream or unexpected response format from OpenRouter. Full response:', response);
+      // 如果是OpenAI的Stream类型，可以尝试读取，但这里为了普适性，先保持简单
+      // 例如： if (response instanceof Stream) { ... }
+    }
 
     console.log('Received response from OpenRouter:', { aiResponse })
 
@@ -83,7 +103,7 @@ export async function POST(request: NextRequest) {
       promptType,
       templateType,
       model,
-      usage: response.usage,
+      usage,
     })
   } catch (error: any) {
     console.error('LLM API error:', error)
